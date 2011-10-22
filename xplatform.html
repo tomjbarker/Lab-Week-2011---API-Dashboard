@@ -1,0 +1,137 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" />
+		<title>Lab Week Mock Up</title>
+		<!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    // Load the Visualization API and the controls package.
+
+	google.load('visualization', '1.0', {packages:['controls']});
+	
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawDash);
+
+    // Main function
+    function drawDash() {
+		var query = new google.visualization.Query(
+		'https://docs.google.com/spreadsheet/tq?range=G%3AM&key=0AmM2pwE_i59ndGx6bGFLX2luWVNXeEQ1QVBJZlF2Snc&gid=7&headers=1');
+		
+		query.send(handleQueryResponse);
+	}
+	
+	function handleQueryResponse(response) {
+		if(response.isError()){
+			alert('Error in query: ' + response.getMessage() + " " + response.getDetailedMessage());
+			return;
+		}
+	
+		var data = response.getDataTable();
+			data.setColumnLabel(0,'API Name');
+			data.setColumnLabel(6,'Service');
+			for(i = 0; i < data.getNumberOfRows(); i++){
+				for( y = 0; y < data.getNumberOfColumns(); y++){
+					var val = data.getValue(i,y);
+					if(val == 'working')
+						data.setFormattedValue(i,y,"<img src='./images/working.gif'/>");
+					else if(val == 'broken')
+						data.setFormattedValue(i,y,"<img src='./images/broken.png'/>");
+				}
+			}
+			
+		
+		var apiSearch = new google.visualization.ControlWrapper({
+			'controlType': 'StringFilter',
+			'containerId': 'controla',
+			'options': {
+				'filterColumnLabel': 'API Name',
+				'ui': {
+					'label':'Filter API Name:'
+				}			
+			}
+		});
+		
+		var serviceSearch = new google.visualization.ControlWrapper({
+			'controlType': 'CategoryFilter',
+			'containerId': 'controld',
+			'options': {
+				'filterColumnLabel': 'Service',
+				'ui': {
+					'label':'Filter Services:',
+					'allowMultiple': true,
+					'selectedValuesLayout': 'belowStacked'
+				}
+			}
+		});
+		
+
+
+		
+		
+		var table = new google.visualization.ChartWrapper({
+			chartType: 'Table',
+			dataTable: data,
+			containerId: 'table',
+			'options':{
+				'allowHtml':true,
+				'width':'auto',
+				},
+			'view': {'columns': [6,0,1,2,3,4,5]}
+		});
+		//wrapper.draw();
+		
+		new google.visualization.Dashboard(document.getElementById('dashboard')).
+			bind([apiSearch,serviceSearch],table).
+			draw(data);
+	}
+	function changeFilter(changer)
+	{
+		document.getElementById('controld').selectedValues = changer;
+		document.getElementById('controld').draw();
+	}
+	</script>
+	</head>
+	<body>
+		<div id="wrapper">
+		<div id="header">
+			<img id="logo" src="./images/cim_logotype.png" alt="CIM"/>
+		</div>
+			<div id="content">
+				<div id="webservices" class="frame">
+				<h2 class="breadcrumb"><span><a href='./index.html'>Home</a> &raquo; xPlatform</span></h2>
+				<div id="services-container">
+				<div id="dashboard">
+				<div id="controla" style="float:left;"></div>
+				<div id="controld" style="float:right;z-index: 20;"></div><br><br>
+				<form>
+				<table style="align=center;">
+					<tr>
+					<td><input type="checkbox" Name="filterSet" Value="Auto Sense" onClick="changeFilter('Auto Sense')">Auto Sense</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('E-data')">E-data</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('E-data-UID FOR ALL')">E-data-UID FOR ALL</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('E-data-UID FOR ALL')">E-data-UID FOR ALL</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('Event Processor')">Event Processor</td>					
+					</tr>
+					<tr>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('Event Processor - ParentalControl')">Event Processor - ParentalControl</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('Event Processor - ParentalControl')">Event Processor - ParentalControl</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('Remote Scheduling')">Remote Scheduling</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('Remote Tune')">Remote Tune</td>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('TV listing - ROVI')">TV listing - ROVI</td>
+					</tr>
+					<tr>
+					<td><input type="checkbox" Name="filterSet" Value="E-data" onClick="changeFilter('TV listing - TMS')">TV listing - TMS</td>
+					</tr>
+				</table>
+				</form>
+				<div id="table" style="align:center;"></div><br>
+				</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

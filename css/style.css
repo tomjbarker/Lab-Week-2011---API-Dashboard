@@ -1,0 +1,225 @@
+/* http://meyerweb.com/eric/tools/css/reset/ */
+/* v1.0 | 20080212 */
+
+html, body, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+
+/* remember to highlight inserts somehow! */
+ins {
+    text-decoration: none;
+}
+del {
+    text-decoration: line-through;
+}
+
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+h2 {
+	font-size: 24px; 
+	font-weight: bold;
+}
+
+.breadcrumb { 
+	padding-bottom: 15px; 
+	font-weight: normal; 
+}
+
+#wrapper { width: 900px; margin: 0 auto; position: relative;}
+#header {height: 100px;}
+#header h1 {margin: 30px; float: left; height: 40px; line-height: 54px;}
+#header h1 span {font-weight: normal;}
+#header h2 {margin: 15px 0; float: left; line-height: 67px;}
+#logo { height: 54px; float: left; margin: 25px 0;}
+#logoText{ height: 54px; float: right; margin: 25px 0;font-size:550%;font-family:Verdana,Geneva,'DejaVu Sans',sans-serif;}
+
+html, body{height: 100%;}
+body{font:12px arial,helvetica,verdana,sans-serif;background: rgb(247, 247, 247);}
+
+
+#wrapper { width: 1200px; margin: 0 auto; position: relative;}
+         
+
+#content {
+	border: 1px solid rgb(228, 228, 228); 
+	background: white;
+}
+
+.frame { padding: 20px;}
+.dialog { display: none; }
+
+
+/* wordpress entries styling - main content column */
+#webservices table { 
+	width: auto; 
+	border-spacing:10; 
+	font-size: 1.1em; 
+}
+
+.mainTab td{
+	padding:20px;
+}
+
+#services-container table { 
+margin-top: 50px; 
+}
+
+
+
+#tableChar td{
+
+}
+
+#webservices table#service-list { 
+	margin-top: 0px; 
+}
+#webservices th {
+	text-align: left;
+	font-size: 20px; 
+	padding: 5px 10px;
+	border-bottom: 1px solid black;
+	border-right: 1px solid black;
+	border-top: 1 px solid black;
+	border-left: 1 px solid black;
+}
+
+#webservices .date, #webservices .today { 
+	font-size: 16px; 
+	font-weight: bold; 
+}
+
+#webservices tr {
+	font-size: 16px;
+}
+
+#webservices td, #legend td {
+	padding: 0px 0px 0px 2px;
+
+	vertical-align: middle;
+}
+
+
+
+#webservices .separator td {
+	border-right: none; 
+	font-size: 16px; 
+	font-weight: bold; 
+} 
+
+#webservices .today {
+	background: rgb(228, 228, 228)  url('/images/status/clock.png') 17px 10px no-repeat; 
+	width: 110px; 
+}
+
+#webservices .highlight {
+	background: rgb(247, 247, 247);
+}
+
+#webservices .status, #webservices .date, #webservices .today, .delete {
+	text-align: center;
+}
+
+#webservices table a {
+	text-decoration: underline;
+}
+
+#webservices thead { 
+	padding-bottom: 25px; 
+}
+
+#webservices .event-log {
+	border-collapse: separate; 
+	border-left:1px solid #E4E4E4;
+	border-top:1px solid #E4E4E4;
+}
+
+#webservices .event-log thead {
+	background:none repeat scroll 0 0 #EEEEEE;
+}
+
+#webservices .event-log th {
+	font-size: 16px;
+	text-align: center;
+}
+
+#webservices .event-log td {
+	font-size: 13px;
+}
+
+#webservices .event-log td:first-child {
+	text-align: center;
+}
+
+.status-header {
+	width: 10%;
+}
+
+.time-header {
+	width: 20%;
+}
+
+.delete-header {
+	width: 8%;
+}
+
+/*Google API Styling*/
+
+div#control{
+
+	display:inline;
+	padding:0px;
+
+	left:20px;
+	z-index:20;
+	top:0px;
+}
+
+div#chart2{
+	display:block;
+	position:relative;
+	bottom:30px;
+	left:0px;
+	z-index:0;
+	top:0px;
+}
+
+div#chart1{
+
+}

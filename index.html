@@ -1,0 +1,203 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" />
+		<title>Lab Week Mock Up</title>
+		<!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    // Load the Visualization API and the controls package.
+    google.load('visualization', '1.0', {'packages':['controls']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawDash);
+
+	function drawDash() {
+		var query = new google.visualization.Query(
+		'https://docs.google.com/spreadsheet/tq?range=E1%3AF7&key=0AmM2pwE_i59ndGx6bGFLX2luWVNXeEQ1QVBJZlF2Snc&gid=0&headers=1');
+		var query2 = new google.visualization.Query(
+		'https://docs.google.com/spreadsheet/tq?range=H1%3AI23&key=0AmM2pwE_i59ndGx6bGFLX2luWVNXeEQ1QVBJZlF2Snc&gid=0&headers=1');
+		query.send(handleQueryResponse);
+		query2.send(handleQuery2Response);
+	}
+    // Main function
+    function handleQueryResponse(response) {
+			if(response.isError()){
+			alert('Error in query: ' + response.getMessage() + " " + response.getDetailedMessage());
+			return;
+		}
+	// Data
+	var data = response.getDataTable();
+	data.addColumn('string','unForm');
+	data.setValue(0,0,'<a href="./xfinitynet.html">Xfinity.comcast.net</a>');
+	data.setValue(1,0,'<a href="./xfinitytv.html">Xfinity Tv</a>');
+	data.setValue(2,0,'<a href="./csi.html">CSI</a>');
+	data.setValue(3,0,'<a href="./cms.html">CMS</a>');
+	data.setValue(4,0,'<a href="./syndication.html">Syndication</a>');
+	data.setValue(5,0,'<a href="./xplatform.html">xPlatform</a>');
+	data.setValue(0,2,'Xfinity.comcast.net');
+	data.setValue(1,2,'Xfinity Tv');
+	data.setValue(2,2,'CSI');
+	data.setValue(3,2,'CMS');
+	data.setValue(4,2,'Syndication');
+	data.setValue(5,2,'xPlatform');
+
+		
+
+
+	// Filter
+	var categoryPicker = new google.visualization.ControlWrapper({
+		'controlType': 'CategoryFilter',
+		'containerId': 'control',
+		'options': {
+			'filterColumnLabel': 'unForm',
+			'ui': {
+				'label':'Filter Team',
+				'allowTyping': true,
+				'allowMultiple': true,
+				'selectedValuesLayout': 'belowStacked'
+			}			
+		}
+	});
+	
+	  
+	// Piechart  
+	var piechart = new google.visualization.ChartWrapper({
+		'chartType': 'PieChart',
+		'containerId': 'chart1',
+		'options': {
+			'width': '575',
+			'height': '270',
+			'legend': 'right',
+			'chartArea': {'left': 0, 'top': 15, 'right': 50, 'bottom': 0},
+			'pieSliceText': 'value'
+		},
+		'ui':{
+			'label':'Chart'
+		},
+		'view': {'columns': [2, 1]}
+	});
+
+	// Table
+	var table = new google.visualization.ChartWrapper({
+		'chartType': 'Table',
+		'dataTable': data,
+		'containerId': 'chart2',
+		'options': {
+			'allowHtml':true,
+			'height': 'auto',
+			'width': '310'
+		},
+		'view': {'columns': [0, 1]}
+	});
+
+	
+
+
+	// Dashboard
+	new google.visualization.Dashboard(document.getElementById('dashboard')).
+		// Bindings
+		bind(categoryPicker, [table,piechart]).
+		// Draw
+		draw(data);
+		
+
+	}
+
+	function handleQuery2Response(response) {
+			if(response.isError()){
+			alert('Error in query: ' + response.getMessage() + " " + response.getDetailedMessage());
+			return;
+		}
+	// Data
+	var data = response.getDataTable();
+		
+
+
+	// Filter
+	var categoryPicker = new google.visualization.ControlWrapper({
+		'controlType': 'CategoryFilter',
+		'containerId': 'controlb',
+		'options': {
+			'filterColumnLabel': 'Service Name',
+			'ui': {
+				'label':'Filter Service',
+				'allowTyping': true,
+				'allowMultiple': true,
+				'selectedValuesLayout': 'belowStacked'
+			}			
+		}
+	});
+	
+	  
+	// Piechart  
+	var piechart = new google.visualization.ChartWrapper({
+		'chartType': 'PieChart',
+		'containerId': 'chart1b',
+		'options': {
+			'width': '575',
+			'height': '270',
+			'legend': 'right',
+			'chartArea': {'left': 0, 'top': 15, 'right': 50, 'bottom': 0},
+			'pieSliceText': 'value'
+		},
+		'ui':{
+			'label':'Chart'
+		}
+	});
+
+	// Table
+	var table = new google.visualization.ChartWrapper({
+		'chartType': 'Table',
+		'dataTable': data,
+		'containerId': 'chart2b',
+		'options': {
+			'allowHtml':true,
+			'height': 'auto',
+			'width': '310'
+		}
+	});
+
+	
+
+
+	// Dashboard
+	new google.visualization.Dashboard(document.getElementById('dashboardb')).
+		// Bindings
+		bind(categoryPicker, [table,piechart]).
+		// Draw
+		draw(data);
+		
+
+	}
+    </script>
+	</head>
+	<body>
+		<div id="wrapper">
+		<div id="header">
+			<img id="logo" src="./images/cim_logotype.png" alt="CIM"/><div id="logoText">API Dashboard</div>
+		</div>
+			<div id="content">
+				<div id="webservices" class="frame">
+				<h2 class="breadcrumb"><span><a href='./index.html'>Home</a> &raquo; </span></h2>
+					<div id="services-container">
+						<table>
+						<div id="dashboard" class="dash" style="float:left;">
+						<div id="dashboardb" class="dash">
+							
+							<tr><td><div id="control"></div></td>
+							<td><div id="controlb" style=""></div></td></tr>
+							<tr ><td><div id="chart1"></div></td>
+							<td><div id="chart1b" style=""></div></td></tr>
+							<tr><td style="vertical-align:top;"><div id="chart2"></div></td>
+							<td style="vertical-align:top;"><div id="chart2b" ></div></td></tr>
+							
+						</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

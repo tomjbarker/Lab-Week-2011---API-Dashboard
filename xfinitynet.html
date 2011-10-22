@@ -1,0 +1,122 @@
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="stylesheet" href="./css/style.css" type="text/css" media="screen" />
+		<title>Lab Week Mock Up</title>
+		<!--Load the AJAX API-->
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+
+    // Load the Visualization API and the controls package.
+
+	google.load('visualization', '1.0', {packages:['controls']});
+	
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawDash);
+
+    // Main function
+    function drawDash() {
+		var query = new google.visualization.Query(
+		'https://docs.google.com/spreadsheet/tq?range=B%3AE&key=0AmM2pwE_i59ndGx6bGFLX2luWVNXeEQ1QVBJZlF2Snc&gid=2&headers=1');
+		
+		query.send(handleQueryResponse);
+	}
+	
+	function handleQueryResponse(response) {
+		if(response.isError()){
+			alert('Error in query: ' + response.getMessage() + " " + response.getDetailedMessage());
+			return;
+		}
+	
+		var data = response.getDataTable();
+			data.setColumnLabel(0,'API Name');
+			for(i = 0; i < data.getNumberOfRows(); i++){
+				for( y = 0; y < data.getNumberOfColumns(); y++){
+					var val = data.getValue(i,y);
+					if(val == 'working')
+						data.setFormattedValue(i,y,"<img src='./images/working.gif'/>");
+					else if(val == 'broken')
+						data.setFormattedValue(i,y,"<img src='./images/broken.png'/>");
+				}
+			}
+		var formatter = new google.visualization.NumberFormat(
+			{suffix: '%',fractionDigits:0});
+		formatter.format(data,3); 	
+		var apiSearch = new google.visualization.ControlWrapper({
+			'controlType': 'StringFilter',
+			'containerId': 'controla',
+			'options': {
+				'filterColumnLabel': 'API Name',
+				'ui': {
+					'label':'Filter API Name:'
+				}			
+			}
+		});
+		
+		var scorePicker = new google.visualization.ControlWrapper({
+			'controlType':'NumberRangeFilter',
+			'containerId':'controlb',
+			'options':{
+				'filterColumnLabel':'Score',
+				'minValue': 0,
+				'maxValue': 100,
+				'ui':{
+					'label':'Filter Scores: '
+				}
+			}
+		});
+		
+		var usagePicker = new google.visualization.ControlWrapper({
+			'controlType':'NumberRangeFilter',
+			'containerId':'controlc',
+			'options':{
+				'filterColumnLabel':'Usage',
+				'minValue': 0,
+				'maxValue': 100,
+				'ui':{
+					'label':'Filter Usage: '
+				}
+			}
+		});
+		
+		
+		var table = new google.visualization.ChartWrapper({
+			chartType: 'Table',
+			dataTable: data,
+			containerId: 'table',
+			'options':{
+				'allowHtml':true
+				},
+			'view': {'columns': [0, 2, 3]}
+		});
+		//wrapper.draw();
+		
+		new google.visualization.Dashboard(document.getElementById('dashboard')).
+			bind([scorePicker,usagePicker,apiSearch],table).
+			draw(data);
+	}
+	
+	</script>
+	</head>
+	<body>
+		<div id="wrapper">
+		<div id="header">
+			<img id="logo" src="./images/cim_logotype.png" alt="CIM"/>
+		</div>
+			<div id="content">
+				<div id="webservices" class="frame">
+				<h2 class="breadcrumb"><span><a href='./index.html'>Home</a> &raquo; Xfinity.comcast.net</span></h2>
+				<div id="services-container">
+				<div id="dashboard">
+				<div id="controla" style="float:left;"></div><br><br>
+				<div id="controlb" style="float:left;"></div><br><br>
+				<div id="controlc"></div>
+				<div id="table" style="align:center;"></div><br>
+				</div>
+				</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
